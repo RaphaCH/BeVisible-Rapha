@@ -4,10 +4,12 @@ import Image from 'next/image';
 
 export default function SideBar() {
     return (
-        <div className="l-0 h-screen w-32 m-0 p-5 flex flex-col bg-steelBlue text-white shadow-2xl">
-            <Image src={'https://github.com/RaphaCH.png'} width={80} height={80} className='rounded-full' />
-            <SideBarIcon icon={<FaBeer size={28} />} />
-            <SideBarIcon icon={<FaFirefox size={28} />} />
+        <div className="w-screen p-5 flex flex-row justify-between bg-steelBlue text-white shadow-2xl">
+            {/* <Image src={'https://github.com/RaphaCH.png'} width={60} height={60} className='rounded-full' /> */}
+            <div className='flex flex-row justify-end'>
+                <SideBarIcon icon={<FaBeer size={28} />} />
+                <SideBarIcon icon={<FaFirefox size={28} />} />
+            </div>
         </div>
     )
 }
