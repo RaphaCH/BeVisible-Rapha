@@ -17,8 +17,8 @@ export default function CVDisplay({firstName = 'Terrence', lastName = 'Castagna 
   return (
     <section className="mt-5 ">
       <form className="max-w-screen">
-        <div className="flex flex-col lg:justify-center lg:flex-row lg:pt-10 p-4 bg-gray-100 border-t-2 border-indigo-400 rounded-lg bg-opacity-5 ">
-          <div className="flex flex-col lg:w-1/2 ">
+        <div className="flex flex-col lg:justify-center lg:pt-10 p-4 bg-gray-100 border-t-2 border-indigo-400 rounded-lg bg-opacity-5 ">
+          <div className="flex flex-col">
             <div className=" md:w-full md:mx-0">
               <div className="flex items-center space-x-4 justify-center">
                 <Image
@@ -29,23 +29,17 @@ export default function CVDisplay({firstName = 'Terrence', lastName = 'Castagna 
                   className="mx-auto object-cover rounded-full"
                 />
                 <div className="flex flex-col">
+                  <h2 className="">{firstName} {lastName}</h2>
                   <p
                     type="text"
                     id="user-info-email"
-                    className=" rounded-lg border-transparent flex-1 appearance-none  border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base  focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                    placeholder="Dev Focus"
+                    className="flex-1 w-full py-2 px-4 text-gray-700 shadow-sm text-base"
                   >{position}</p>
+                  <h3 className="">{email}</h3>
                 </div>
               </div>
             </div>
             <div className="flex flex-col  space-y-4 text-gray-500 lg:mt-10">
-              <div className="flex flex-row p-2 my-5 w-full items-center justify-evenly">
-                <h2 className="">{firstName} {lastName}</h2>
-              </div>
-              
-              <div className="flex flex-row p-2 my-5 w-full items-center justify-evenly">
-                <h2 className="">{email}</h2>
-              </div>
               <h2 className="font-bold text-2xl p-2 my-5 flex flex-col flex-1 justify-center items-center">
                 Badges
               </h2>
@@ -92,7 +86,7 @@ export default function CVDisplay({firstName = 'Terrence', lastName = 'Castagna 
 
           <div className="border-[1.5px] border-solid  border-gray-300 m-10 " />
 
-          <div className="flex flex-col lg:w-1/2">
+          <div className="flex flex-col">
             <h1 className="text-gray-600 font-bold mb-5 self-center text-2xl">
               The Pride and Joy - ./Projects
             </h1>
