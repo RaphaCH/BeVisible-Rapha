@@ -7,6 +7,7 @@ import CVDisplay from "../../components/CVDisplay";
 export default function Dashboard() {
   return (
       <section className="">
+        <SideBar />
         {/* <AppForm /> */}
         <CVDisplay />
       </section>
