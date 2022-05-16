@@ -44,7 +44,7 @@ export default function CVDisplay({firstName = 'Raphael', lastName = 'Castagna H
               <h2 className="font-bold text-xl md:text-2xl p-2 my-5 flex flex-col flex-1 justify-center items-center">
                 Badges
               </h2>
-              <div className="my-5 grid sm:gap-5 place-content-center grid-flow-col lg:grid-flow-row grid-cols-4 text-3xl lg:text-4xl">
+              <div className="my-5 grid sm:gap-5 place-items-center grid-flow-col lg:grid-flow-row grid-cols-4 text-3xl lg:text-4xl">
                 <FontAwesomeIcon
                   icon={faJsSquare}
                   className="text-vegasGold mx-2 my-3 animate-pulse"
