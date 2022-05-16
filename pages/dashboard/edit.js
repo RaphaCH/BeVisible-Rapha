@@ -4,12 +4,11 @@ import CVDisplay from "../../components/CVDisplay";
 
 
 
-export default function Dashboard() {
+export default function DashboardEdit() {
   return (
       <section className="">
         <SideBar />
-        {/* <AppForm /> */}
-        <CVDisplay />
+        <AppForm />
       </section>
   )
 }

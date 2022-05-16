@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Link from "next/link";
 
 import AppInput from "../../components/AppInput";
 import Button from "../../components/Button";
@@ -45,20 +46,19 @@ export default function Login() {
           <form className="bg-white rounded-md shadow-2xl p-5">
             <h1 className="text-gray-800 font-bold text-2xl mb-1">Hello Again!</h1>
             <p className="text-sm font-normal text-gray-600 mb-8">Welcome Back</p>
-            <div className="flex items-center border-2 mb-8 py-2 px-3 rounded-2xl">
+            <div className="mb-1 py-2 px-3">
               <AppInput icon={faAt} name='email' value={form.email} onChange={handleChange} placeholder='Email Address' />
-              <p>{form.email}</p>
             </div>
-            <div className="flex items-center border-2 mb-12 py-2 px-3 rounded-2xl ">
+            <div className="mb-1 py-2 px-3">
               <AppInput icon={faLock} name='password' value={form.password} onChange={handleChange} placeholder='*****' />
-              <p>{form.password}</p>
             </div>
-            <Button color="primary" name='Login' type="submit" />
+            <Button name='Login' type="submit" />
             <div className="flex justify-between mt-4">
               <span className="text-sm ml-2 hover:text-blue-500 cursor-pointer 
               hover:underline hover:decoration-solid hover:text-base duration-100 transition-all">Forgot Password ?</span>
-
-              <a href="#" className="text-sm ml-2 hover:text-blue-500 cursor-pointer hover:underline hover:decoration-solid hover:text-base duration-100 transition-all">Don't have an account yet?</a>
+              <Link href='/users/signup'>
+                <a className="text-sm ml-2 hover:text-blue-500 cursor-pointer hover:underline hover:decoration-solid hover:text-base duration-100 transition-all">Don't have an account yet?</a>
+              </Link>
             </div>
           </form>
         </div>

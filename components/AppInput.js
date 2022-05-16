@@ -12,6 +12,6 @@ export default function AppInput({ icon, spin = false, name, value, onChange, pl
         type={type}
         placeholder={placeholder} />
     </div >
-  )
+  ) 
 }
 

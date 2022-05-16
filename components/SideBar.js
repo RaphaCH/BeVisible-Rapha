@@ -1,14 +1,21 @@
-import { FaBeer, FaFirefox, FaEye, FaPen } from 'react-icons/fa';
+import { FaBeer, FaFirefox, FaEye, FaPen, FaArrowRight} from 'react-icons/fa';
 import Image from 'next/image';
+import Link from 'next/link';
 
 
 export default function SideBar() {
     return (
         <div className="h-20 flex justify-end items-center bg-steelBlue text-white shadow-2xl">
-            {/* <Image src={'https://github.com/RaphaCH.png'} width={60} height={60} className='rounded-full' /> */}
             <div className='flex p-5'>
-                <SideBarIcon icon={<FaEye size={28} />} text='View Profile' />
-                <SideBarIcon icon={<FaPen size={28} />} text='Edit Profile'/>
+                <Link href='/dashboard/view'>
+                    <a><SideBarIcon icon={<FaEye size={28} />} text='View Profile' /></a>
+                </Link>
+                <Link href='/dashboard/edit'>
+                    <a><SideBarIcon icon={<FaPen size={28} />} text='View Profile' /></a>
+                </Link>
+                <Link href='/users/login'>
+                    <a><SideBarIcon icon={<FaArrowRight size={28} />} text='View Profile' /></a>
+                </Link>
             </div>
         </div>
     )
