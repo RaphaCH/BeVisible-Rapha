@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import Link from "next/link";
 
-import {AuthContext} from './contexts/AuthContext';
+import {AuthContext} from '../../contexts/AuthContext';
 import AppInput from "../../components/AppInput";
 import Button from "../../components/Button";
 import { faAt, faLock } from '@fortawesome/free-solid-svg-icons';

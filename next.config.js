@@ -5,7 +5,7 @@ const nextConfig = {
     domains: ['github.com']
   },
   env: {
-    MONGO: "mongodb+srv://RaphaelCH:577uLumAb9wynY7@cluster0.zjqfk.mongodb.net/BeVisible?retryWrites=true&w=majority"
+    MONGO: process.env.MONGO
   }
 }
 
