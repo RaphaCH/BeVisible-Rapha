@@ -1,15 +1,21 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Link from "next/link";
 
+import {AuthContext} from './contexts/AuthContext';
 import AppInput from "../../components/AppInput";
 import Button from "../../components/Button";
 import { faAt, faLock } from '@fortawesome/free-solid-svg-icons';
 
 export default function Login() {
+  const {signIn} = useContext(AuthContext)
   const [form, setForm] = useState({
     email: '',
     password: '',
   })
+
+  const handleSignIn = async(form) => {
+    await signIn(form);
+  }
 
   const handleChange = (event) => {
     const target = event.target;
@@ -52,7 +58,7 @@ export default function Login() {
             <div className="mb-1 py-2 px-3">
               <AppInput icon={faLock} name='password' value={form.password} onChange={handleChange} placeholder='*****' />
             </div>
-            <Button name='Login' type="submit" />
+            <Button handleSubmit={handleSignIn} name='Login' type="submit" />
             <div className="flex justify-between mt-4">
               <span className="text-sm ml-2 hover:text-blue-500 cursor-pointer 
               hover:underline hover:decoration-solid hover:text-base duration-100 transition-all">Forgot Password ?</span>
