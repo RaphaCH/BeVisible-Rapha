@@ -49,7 +49,6 @@ export default function SignUp() {
           <Image 
           width={470} 
           height={470} 
-          priority
           alt='logo of the company' 
           src="/images/logo-becode.png"
           layout="responsive"
