@@ -1,7 +1,7 @@
 import Image from 'next/image';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBeer } from 'react-icons/fa';
+import { faCode } from '@fortawesome/free-solid-svg-icons';
 
 export default function Card({email = 'test@test.com', firstName = 'Test', lastName = 'Testy', position = 'Web Dev' }) {
     return (
@@ -15,7 +15,7 @@ export default function Card({email = 'test@test.com', firstName = 'Test', lastN
                 alt="avatar" />
             </div>
             <div className="flex items-center px-6 py-3 bg-beCode">
-                <FontAwesomeIcon icon={faBeer} />
+                <FontAwesomeIcon icon={faCode} className='text-base text-white' />
                 <h1 className="mx-3 text-white font-semibold text-lg">{position}</h1>
             </div>
             <div className="py-4 px-6">
