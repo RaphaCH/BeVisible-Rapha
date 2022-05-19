@@ -1,11 +1,18 @@
+import Image from 'next/image';
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBeer } from 'react-icons/fa';
 
 export default function Card({email = 'test@test.com', firstName = 'Test', lastName = 'Testy', position = 'Web Dev' }) {
     return (
         <div className="max-w-xs bg-white shadow-lg rounded-lg overflow-hidden my-4">
-            <div className="w-full ">
-                <img className="w-full object-contain relative" src={"https://github.com/RaphaCH.png"} alt="avatar" />
+            <div className="aspect-w-10 aspect-h-10">
+                <Image 
+                layout='fill'
+                objectFit='cover'
+                className="" 
+                src={"https://github.com/RaphaCH.png"} 
+                alt="avatar" />
             </div>
             <div className="flex items-center px-6 py-3 bg-beCode">
                 <FontAwesomeIcon icon={faBeer} />
