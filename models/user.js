@@ -1,10 +1,12 @@
-import mongoose, { mongo, Schema } from 'mongoose'
-import { boolean } from 'webidl-conversions'
+import mongoose from 'mongoose'
+
+
 
 const userSchema = new mongoose.Schema({
     email: {
         type: String,
-        required: true
+        required: true,
+        lowercase: true,
     },
     password: {
         type: String,
@@ -26,11 +28,11 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: 'learner'
     },
-    promotion: {type: Schema.Types.ObjectId, ref: 'Promotion'},
+    promotion: {type: mongoose.Schema.Types.ObjectId, ref: 'Promotion'},
     createdAt: {
         type: Date,
         default: Date.now
     }
 })
 
-module.exports = mongoose.model.userSchema || mongoose.model('User', userSchema);
+module.exports = mongoose.models.userSchema || mongoose.model('User', userSchema);

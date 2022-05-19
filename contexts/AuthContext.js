@@ -25,17 +25,21 @@ export function AuthProvider({children}) {
 
 
     async function signIn({email, password}) {
-        const {token, user} = await signInRequest({email, password});
-
-        setCookie(undefined, 'beVisible.token', token, {
-            maxAge: 60 * 60 * 1, //cookies will last for 1 hour
-        })
-
-        setUser(user);
-        //Retrieve permissions from user (Student, Coach, Company).
-        //Push a different route based on those permissions.
-        //Example: Students go to dashboard/view.
-        Router.push('/dashboard/view');
+        const {token, user, message} = await signInRequest({email, password});
+        console.log(token, user, message);
+        // const qualquerCoisa = await signInRequest({email, password});
+        
+        if(token !== null) {
+            setCookie(undefined, 'beVisible.token', token, {
+                maxAge: 60 * 60 * 1, //cookies will last for 1 hour
+            })
+            setUser(user);
+            Router.push('/dashboard/view');
+        }
+        return {message}
+        // //Retrieve permissions from user (Student, Coach, Company).
+        // //Push a different route based on those permissions.
+        // //Example: Students go to dashboard/view.
     }
 
 

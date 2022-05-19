@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 
 export default function Custom404() {
@@ -10,17 +11,18 @@ export default function Custom404() {
           <p className="text-2xl md:text-3xl font-light leading-normal mb-8">
             Oops. Internet gremlings seem to have vanquished that page. We can{"'"}t find it.
           </p>
-
-          <a href="#" className="px-5 inline py-3 text-sm font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-green-600 active:bg-red-600 hover:bg-red-700">back to homepage</a>
+          <Link href='/'>
+            <a className="px-5 inline py-3 text-sm font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-green-600 active:bg-red-600 hover:bg-red-700">back to homepage</a>
+          </Link>
         </div>
         <div className="w-full lg:w-1/2 mx-5 my-12">
           <Image
-          width={1119}
-          height={699}
-          layout="responsive"
-          className=''
-          src="/images/404.svg" 
-          alt="Page not found" />
+            width={1119}
+            height={699}
+            layout="responsive"
+            className=''
+            src="/images/404.svg"
+            alt="Page not found" />
         </div>
 
       </div>

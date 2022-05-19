@@ -6,7 +6,7 @@ import { faCode } from '@fortawesome/free-solid-svg-icons';
 export default function Card({email = 'test@test.com', firstName = 'Test', lastName = 'Testy', position = 'Web Dev' }) {
     return (
         <div className="max-w-xs bg-white shadow-lg rounded-lg overflow-hidden my-4">
-            <div className="aspect-w-10 aspect-h-10">
+            <div className="aspect-w-10 aspect-h-10 bg-gray-100">
                 <Image 
                 layout='fill'
                 objectFit='cover'
