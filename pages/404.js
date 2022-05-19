@@ -17,6 +17,7 @@ export default function Custom404() {
           <Image
           width={1119}
           height={699}
+          priority
           layout="responsive"
           className=''
           src="/images/404.svg" 

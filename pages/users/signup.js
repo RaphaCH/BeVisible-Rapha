@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Link from "next/link";
+import Image from 'next/image';
 
 import AppInput from "../../components/AppInput";
 import Button from "../../components/Button";
@@ -35,23 +36,26 @@ export default function SignUp() {
   return (
     <div className="h-screen flex">
       <div className="hidden lg:flex w-full lg:w-1/2 
-        xl:bg-becode lg:bg-none bg-beCodeLight bg-auto bg-no-repeat bg-right
+        bg-beCodeLight bg-auto bg-no-repeat bg-right
           justify-around items-center">
-        <div
-          className=" 
-                  bg-black 
-                  opacity-20 
-                  inset-0 
-                  z-0"
-        >
-        </div>
-        <div className="w-full mx-auto px-20 flex-col items-center space-y-6">
+        <div className="w-1/2 mx-auto px-20 flex-col items-center space-y-6">
           <h1 className="text-white font-bold text-4xl font-sans">BeVisible</h1>
           <h2 className="text-white mt-1">Flood the market with your talent.</h2>
           {/* <div className="flex justify-center lg:justify-start mt-6">
             <a href="#" className="hover:bg-indigo-700 hover:text-white hover:-translate-y-1 transition-all duration-500 bg-white text-indigo-800 mt-4 px-4 py-2 rounded-2xl font-bold mb-2">Get Started</a>
           </div> */}
         </div>
+        <div className="w-1/2">
+          <Image 
+          width={470} 
+          height={470} 
+          priority
+          alt='logo of the company' 
+          src="/images/logo-becode.png"
+          layout="responsive"
+           />
+        </div>
+         
       </div>
       <div className="flex w-full lg:w-1/2 justify-center items-center bg-white space-y-8">
         <div className="w-full px-8 md:px-32 lg:px-24">
