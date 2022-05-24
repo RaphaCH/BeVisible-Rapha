@@ -1,5 +1,7 @@
 import { createContext , useEffect, useState,} from "react"
 import {setCookie, parseCookies} from 'nookies';
+// import Cookie from 'js-cookie';
+// import {setCookies} from 'cookies-next';
 
 import {api} from '../services/api';
 
@@ -18,21 +20,27 @@ export function AuthProvider({children}) {
 
         api.defaults.headers['Authorization'] = `Bearer ${token}`;
 
-        if(token) {
-            recoverUserCredentials(token).then(response => setUser(response.user));
-        }
+        // if(token) {
+        //     recoverUserCredentials(token).then(response => setUser(response.user));
+        // }
     }, [])
 
 
     async function signIn({email, password}) {
         const {token, user, message} = await signInRequest({email, password});
-        console.log(token, user, message);
         // const qualquerCoisa = await signInRequest({email, password});
+
+        api.defaults.headers['Authorization'] = `Bearer ${token}`;
         
+
         if(token !== null) {
             setCookie(undefined, 'beVisible.token', token, {
                 maxAge: 60 * 60 * 1, //cookies will last for 1 hour
             })
+            // Cookie.set('beVisible.token', token, {
+            //     expires: 1/24,
+            //     maxAge: 60 * 60 * 1 //1 hour
+            // })
             setUser(user);
             Router.push('/dashboard/view');
         }

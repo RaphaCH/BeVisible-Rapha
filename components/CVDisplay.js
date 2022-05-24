@@ -24,7 +24,7 @@ export default function CVDisplay({firstName = 'Raphael', lastName = 'Castagna H
               <div className="flex items-center space-x-4 justify-center">
                 <Image
                   alt="profil"
-                  src={"https://github.com/RaphaCH.png"}
+                  src={"https://github.com/kristinegusta.png"}
                   width={100}
                   height={100}
                   className="mx-auto object-cover rounded-full"

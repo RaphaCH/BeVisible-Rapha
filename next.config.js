@@ -5,7 +5,8 @@ const nextConfig = {
     domains: ['github.com']
   },
   env: {
-    MONGO: process.env.MONGO
+    MONGO: process.env.MONGO,
+    KEY: process.env.KEY
   }
 }
 

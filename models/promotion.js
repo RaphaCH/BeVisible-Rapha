@@ -5,4 +5,4 @@ const promotionSchema = new mongoose.Schema({
     iteration: Number,
 })
 
-module.exports = mongoose.model.promotionSchema || mongoose.model('Promotion', promotionSchema);
+export default mongoose.models.Promotion || mongoose.model('Promotion', promotionSchema);

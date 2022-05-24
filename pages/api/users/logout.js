@@ -8,7 +8,7 @@ import cookie from 'cookie';
 
 const KEY = process.env.KEY;
 
-
+//TO DO! Only "DONE" part is cookie deletion
 export default async function Handler(req, res) {
     const {email, password} = req.body;
     const {method} = req;
@@ -34,10 +34,10 @@ export default async function Handler(req, res) {
                             if(!token) {
                                 return res.status(500).json({message: 'Something wrong did not go right'})
                             } 
-                            res.setHeader('Set-Cookie', cookie.serialize('visibleBackend', token, {
+                            res.setHeader('Set-Cookie', cookie.serialize('beVisible.token', '', {
                                 httpOnly: true,
                                 secure: process.env.NODE_ENV !== 'development',
-                                maxAge: 60 * 60,
+                                expires: new Date(0),
                                 sameSite: 'strict',
                                 path: '/'
                             }))

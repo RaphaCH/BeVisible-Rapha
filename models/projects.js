@@ -1,4 +1,4 @@
-import mongoose, { Schema } from 'mongoose'
+import mongoose from 'mongoose'
 
 
 const projectSchema = new mongoose.Schema({
@@ -7,10 +7,10 @@ const projectSchema = new mongoose.Schema({
     photo: String,
     link: String,
     profile_id: {
-      type:  Schema.Types.ObjectId,
+      type:  mongoose.Schema.Types.ObjectId,
       ref: 'Profile'
     }
 })
 
 
-module.exports = mongoose.model.projectSchema || mongoose.model('Project', projectSchema);
+export default mongoose.models.Project || mongoose.model('Project', projectSchema);

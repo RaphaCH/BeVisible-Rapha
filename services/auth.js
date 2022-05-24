@@ -1,9 +1,9 @@
 import dbConnect from "../lib/dbConnect";
+import {v4 as uuid, validate as uuidValidate} from 'uuid'
 
 
 
 export async function signInRequest(data) {
-    
     const response = await fetch('/api/users/login', {
         method: 'POST',
         headers: {
@@ -20,21 +20,16 @@ export async function signInRequest(data) {
         }
     }
     const result = await response.json()
-    console.log(result);
-
-
-
-
 
     //find user inside the DB using the information provided during Login. email, password
     // const user = User.findOne()
     // const userProfile = Profile.findOne()
 
     return {
-        token: result._id,
+        token: result.token,
         user: {
-            email: result.email,
-            permissions: result.permissions,
+            email: result.payload.email,
+            permissions: result.payload.permissions,
         },
         message: 'success'
     }
@@ -42,7 +37,19 @@ export async function signInRequest(data) {
 }
 
 export async function recoverUserCredentials(token) {
-    await dbConnect();
+    function uuidValidate(uuid) {
+        return uuidValidate(uuid)
+    }
+
+    const isValid = uuidValidate(token);
+
+    if (isValid) {
+        // if token is still valid, fetch user's info. But where is user info? payload of token, cookies?
+        
+    }
+
+
+    //await dbConnect();
 
     
     //same as previous one
