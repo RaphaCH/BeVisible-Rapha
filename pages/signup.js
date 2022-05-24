@@ -19,6 +19,7 @@ export default function SignUp() {
     promotion: '',
     iteration: 7,
   })
+  
   const [message, setMessage] = useState('');
 
   const handleChange = (event) => {
@@ -32,7 +33,6 @@ export default function SignUp() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(form);
     try {
       const response = await fetch('/api/users/signup', {
         method: 'POST',
@@ -43,7 +43,6 @@ export default function SignUp() {
       })
       if(!response.ok) {
         const data = await response.json()
-        console.log(data);
         setMessage(data.message);
       }
       if(response.ok){

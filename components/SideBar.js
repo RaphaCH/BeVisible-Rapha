@@ -13,7 +13,7 @@ export default function SideBar() {
                 <Link href='/dashboard/edit'>
                     <a><SideBarIcon icon={<FaPen size={28} />} text='View Profile' /></a>
                 </Link>
-                <Link href='/users/login'>
+                <Link href='/'>
                     <a><SideBarIcon icon={<FaArrowRight size={28} />} text='View Profile' /></a>
                 </Link>
             </div>

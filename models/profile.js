@@ -1,9 +1,9 @@
-import mongoose, { Schema } from 'mongoose'
+import mongoose from 'mongoose';
 
 
 const profileSchema = new mongoose.Schema({
     user: {
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
     },
     firstName: {
@@ -19,7 +19,7 @@ const profileSchema = new mongoose.Schema({
     telephone: Number,
     projects: [
         {
-            type: Schema.Types.ObjectId,
+            type: mongoose.Schema.Types.ObjectId,
             ref: 'Project'
         }
     ],
@@ -112,4 +112,4 @@ const profileSchema = new mongoose.Schema({
     ]
 })
 
-module.exports = mongoose.model.profileSchema || mongoose.model('Profile', profileSchema);
+export default mongoose.models.Profile || mongoose.model('Profile', profileSchema);

@@ -1,10 +1,12 @@
 import dbConnect from "../../../lib/dbConnect";
 import User from '../../../models/user';
 
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 
+const saltRounds = 10;
 
 export default async function Handler(req, res) {
-    console.log('hello from fetch');
     const {email, password, password2} = req.body;
     const {method} = req;
     const errors = [];
@@ -27,25 +29,30 @@ export default async function Handler(req, res) {
                     errors.push({message: 'Password must be at least 6 characters long.'})
                     return res.status(422).json({message: 'Password must be at least 6 characters long.'})
                 }
-                console.log('here');
                 const exists = await User.findOne({email: email});
                 if(exists) {
-                    return res.status(409).send({message: `${email} is already registered`});
+                    return res.status(409).send({message: `${email} is already registered`})
                 }
                 if(!exists) {
                     const newUser = new User({
                         email,
                         password
                     })
-                    newUser.save()
-                    return res.status(201);
+                    bcrypt.hash(newUser.password, saltRounds, (error, hash) => {
+                        if(error) {
+                            throw error
+                        }
+                        newUser.password = hash;
+                        newUser.save()
+                    })
+                    return res.status(201)
                 }
             } catch (error) {
                 console.log(error);
+                return res.status(500)
             }
             
             break;
-    
         default:
             res.status(400).json({success: false})
             break;
