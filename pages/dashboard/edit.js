@@ -27,7 +27,7 @@ export default function DashboardEdit({profile}) {
     return (
       <section className="">
         <SideBar />
-        <AppForm profile={newProfile} newProfile={true}/>
+        <AppForm profile={newProfile} profileExists={false}/>
       </section>
     )
   }

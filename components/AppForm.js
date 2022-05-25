@@ -1,5 +1,6 @@
 import {useState, useEffect} from 'react';
 import Image from "next/image";
+import {useRouter} from 'next/router';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -16,10 +17,12 @@ import {
 import AppInput from './AppInput';
 import AppTextArea from './AppTextArea';
 import AddProject from './AddProject';
+import { api } from '../services/api';
 
 
 
-export default function AppForm({profile, newProfile = false}) {
+export default function AppForm({profile, profileExists = true}) {
+  const router = useRouter();
   const [form, setForm] = useState({
     firstName: profile.firstName,
     lastName: profile.lastName,
@@ -39,6 +42,19 @@ export default function AppForm({profile, newProfile = false}) {
     link: "",
   })
 
+  const postData = async (form) => {
+    try {
+      const response = await api.post('api/users/profile/new', form);
+      if(response.status !== 200) {
+        console.log(response.status, response.statusText);
+      } else {
+        router.push('/dashboard/view');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   const handleChange = (event) => {
     const target = event.target;
     setForm({
@@ -47,10 +63,19 @@ export default function AppForm({profile, newProfile = false}) {
     })
   }
 
+  const addProject = () => {
+    alert('add project');
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    profileExists ? putData(form) : postData(form);
+  }
+
 
   return (
     <section className="mt-5 ">
-      <form className="max-w-screen">
+      <form onSubmit={handleSubmit} className="max-w-screen">
         <div className="flex flex-col lg:justify-center lg:flex-row lg:pt-10 p-4 bg-gray-100 border-t-2 border-indigo-400 rounded-lg bg-opacity-5 ">
           <div className="flex flex-col lg:w-1/2 ">
             <div className=" md:w-full md:mx-0">
@@ -78,13 +103,13 @@ export default function AppForm({profile, newProfile = false}) {
               <div className="flex flex-row p-2 my-5 w-full items-center justify-evenly">
                 <h2 className="w-1/3">First Name</h2>
                 <div className="w-2/3">
-                    <AppInput name='firstName' value={form.firstName} onChange={handleChange} placeholder='First Name'           />
+                    <AppInput required name='firstName' value={form.firstName} onChange={handleChange} placeholder='First Name'           />
                 </div>
               </div>
               <div className="flex flex-row p-2 my-5 w-full items-center justify-evenly">
                 <h2 className="w-1/3">Last Name/s</h2>
                 <div className="w-2/3">
-                    <AppInput name='lastName' value={form.lastName} onChange={handleChange} placeholder='Last Name' />
+                    <AppInput required name='lastName' value={form.lastName} onChange={handleChange} placeholder='Last Name' />
                 </div>
               </div>
               <div className="flex flex-row p-2 my-5 w-full items-center justify-evenly">
@@ -93,63 +118,41 @@ export default function AppForm({profile, newProfile = false}) {
                     <AppInput name='email' value={form.email} onChange={handleChange} placeholder='Email' />
                 </div>
               </div>
+              <div className="flex flex-row p-2 my-5 w-full items-center justify-evenly">
+                <h2 className="w-1/3">Telephone</h2>
+                <div className="w-2/3">
+                    <AppInput name='telephone' value={form.telephone} onChange={handleChange} placeholder='Telephone' />
+                </div>
+              </div>
               <h2 className="font-bold text-2xl p-2 my-5 flex flex-col flex-1 justify-center items-center">
                 Badges
               </h2>
               <div className="my-5 grid gap-4 place-items-center grid-flow-row grid-cols-4 text-3xl lg:text-6xl">
-                <FontAwesomeIcon
-                  icon={faJsSquare}
-                  className="text-vegasGold mx-2 my-3 animate-pulse"
-                />
-                <FontAwesomeIcon
-                  icon={faPython}
-                  className="text-gray-300 mx-2 my-3"
-                />
-                <FontAwesomeIcon
-                  icon={faHtml5}
-                  className="text-gray-300 mx-2 my-3"
-                />
-                <FontAwesomeIcon
-                  icon={faCss3}
-                  className="text-gray-300 mx-2 my-3"
-                />
-                <FontAwesomeIcon
-                  icon={faNodeJs}
-                  className="text-gray-300 mx-2 my-3"
-                />
-                <FontAwesomeIcon
-                  icon={faReact}
-                  className="text-gray-300 mx-2 my-3"
-                />
-                <FontAwesomeIcon
-                  icon={faVuejs}
-                  className="text-gray-300 mx-2 my-3"
-                />
-                <FontAwesomeIcon
-                  icon={faAngular}
-                  className="text-gray-300 mx-2 my-3"
-                />
-                <FontAwesomeIcon
-                  icon={faFigma}
-                  className="text-gray-300 mx-2 my-3"
-                />
+                {badges.map((badge, index) => {
+                  return (
+                      <FontAwesomeIcon key={index} icon={badge.name} className={badge.isActive ? "badge-true" : "badge-false"} />
+                  )
+                })}
               </div>
             </div>
           </div>
 
           <div className="border-[1.5px] border-solid  border-gray-300 m-10 " />
 
+        
+        {profileExists ? (
           <div className="flex flex-col lg:w-1/2">
             <h1 className="text-gray-600 font-bold mb-5 self-center text-2xl">
               Your Pride and Joy - ./Projects
             </h1>
-            <AddProject />
-            <div className="border-[1.5px] border-solid  border-gray-300 m-10 "></div>
-            <AddProject />
-            <div className="border-[1.5px] border-solid  border-gray-300 m-10 " />
-            <AddProject />
-            <div className="border-[1.5px] border-solid  border-gray-300 m-10 " />
+            {projects.map((project, index) => {
+              <AddProject key={index} project={project} />
+            })}
+            {projects.length < 3 ? (<AddProject />) : (<p>cuzinho</p>)}
           </div>
+        ) : (<div className="flex flex-col lg:w-1/2"><h1 className="text-gray-600 font-bold mb-5 self-center text-2xl">
+        Save your profile to add projects
+      </h1></div>)}
         </div>
 
         <div className="space-y-6 bg-white border-b-2 border-indigo-400 rounded-lg">
@@ -168,26 +171,6 @@ export default function AppForm({profile, newProfile = false}) {
             </div>
           </div>
           <hr />
-          {/* <div className="items-center w-full p-8 space-y-4 text-gray-500 md:inline-flex md:space-y-0">
-            <h2 className="max-w-sm mx-auto md:w-4/12 lg:text-xl">Change password</h2>
-            <div className="w-full max-w-sm pl-2 mx-auto space-y-5 md:w-5/12 md:pl-9 md:inline-flex">
-                <input
-                  type="text"
-                  id="user-info-password"
-                  className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                  placeholder="Password"
-                />
-            </div>
-            <div className="text-center md:w-3/12 md:pl-6">
-              <button
-                type="button"
-                className="py-2 px-4  bg-pink-600 hover:bg-pink-700 focus:ring-pink-500 focus:ring-offset-pink-200 text-white w-fit transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
-              >
-                Change
-              </button>
-            </div>
-          </div>
-          <hr /> */}
           <div className="w-full px-4 pb-4 mx-auto text-gray-500 md:w-1/2 ">
             <button
               type="submit"
