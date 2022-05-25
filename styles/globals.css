@@ -26,6 +26,14 @@
     focus:ring-2 focus:ring-purple-600 focus:border-transparent 
   }
 
+  .badge-false{
+    @apply text-gray-300 mx-2 my-3
+  }
+
+  .badge-true{
+    @apply text-vegasGold mx-2 my-3 animate-pulse
+  }
+
 }
 html,
 body {

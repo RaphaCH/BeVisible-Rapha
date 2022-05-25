@@ -20,9 +20,9 @@ export function AuthProvider({children}) {
 
         api.defaults.headers['Authorization'] = `Bearer ${token}`;
 
-        // if(token) {
-        //     recoverUserCredentials(token).then(response => setUser(response.user));
-        // }
+        if(token) {
+            recoverUserCredentials(token).then(response => setUser(response.user));
+        }
     }, [])
 
 

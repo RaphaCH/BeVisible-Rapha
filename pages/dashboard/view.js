@@ -15,14 +15,12 @@ import { getApiClient } from '../../services/axios';
 
 
 export default function DashboardView({profile}) {
-
   if(profile === null) {
     return (
       <section className="">
-        <SideBar />
-        <Lottie className='mx-auto w-1/3' loop animationData={emptyBox} />
+        <Lottie className='mx-auto lg:w-1/3' loop animationData={emptyBox} />
         <Link href='/dashboard/edit'>
-          <h2 className='text-lg md:text-xl font-medium text-center'>Hmmm, this is looking real empty. <span className='underline text-blue-500'>Let{"'"}s create your profile!</span></h2>
+          <h2 className='mt-5 text-lg md:text-xl xl:text-2xl font-medium text-center'>Hmmm, this is looking real empty. <span className='underline text-blue-500'>Let{"'"}s create your profile!</span></h2>
         </Link>
       </section>
     )
@@ -31,7 +29,20 @@ export default function DashboardView({profile}) {
   return (
       <section className="">
         <SideBar />
-        <CVDisplay />
+        <CVDisplay 
+        firstName={profile.firstName} 
+        lastName={profile.lastName} 
+        image={profile.image || ''}
+        position={profile.jobTitle}
+        email={profile.email}
+        telephone={profile.telephone}
+        projects={profile.projects}
+        about={profile.aboutMe} 
+        history={profile.pastExperiences}
+        badges={profile.badges}
+        key={profile._id} 
+        />
+        {/* <CVDisplay /> */}
       </section>
   )
 }
@@ -52,8 +63,7 @@ export async function getServerSideProps(context) {
   }
 
   const {id, permissions} = jwt.verify(token, process.env.KEY);
-  console.log(id);
-  console.log(permissions);
+  
 
   if(permissions !== 'learner') {
     return {
@@ -65,18 +75,26 @@ export async function getServerSideProps(context) {
   }
 
   await dbConnect()
-  const userProfile = await Profile.findOne({user: id});
+  const userProfile = await Profile.findOne({user: id}).lean();
+  if(userProfile) {
+    userProfile._id = userProfile._id.toString();
+    userProfile.user = userProfile.user.toString();
+    userProfile.badges = userProfile.badges.map(badge => {
+      return {
+        id: badge._id.toString(),
+        name: badge.name,
+        isActive: badge.isActive,
+      }
+    });
+  }
   if(userProfile === null) {
     return {
       props: {profile: null}
     }
   }
-  
-
-
 
   return {
-    props: {}
+    props: {profile: userProfile}
   }
 
 

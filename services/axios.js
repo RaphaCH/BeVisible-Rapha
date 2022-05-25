@@ -3,7 +3,6 @@ import {parseCookies} from 'nookies';
 
 export function getApiClient(context) {
     const {'beVisible.token': token} = parseCookies(context);
-    
 
 
     const api = axios.create({
