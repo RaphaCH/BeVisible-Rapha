@@ -1,9 +1,11 @@
-import nookies, { parseCookies } from 'nookies';
-// import cookie from 'cookie';
-import {getCookie} from 'cookies-next';
+import { parseCookies } from 'nookies';
 import jwt from 'jsonwebtoken';
+import Lottie from 'lottie-react';
+import Link from 'next/link';
 
+import emptyBox from '../../public/svg/emptyBox.json';
 import dbConnect from '../../lib/dbConnect'
+import Profile from '../../models/profile';
 
 import SideBar from "../../components/SideBar";
 import AppForm from "../../components/AppForm";
@@ -12,7 +14,20 @@ import { getApiClient } from '../../services/axios';
 
 
 
-export default function DashboardView({}) {
+export default function DashboardView({profile}) {
+
+  if(profile === null) {
+    return (
+      <section className="">
+        <SideBar />
+        <Lottie className='mx-auto w-1/3' loop animationData={emptyBox} />
+        <Link href='/dashboard/edit'>
+          <h2 className='text-lg md:text-xl font-medium text-center'>Hmmm, this is looking real empty. <span className='underline text-blue-500'>Let's create your profile!</span></h2>
+        </Link>
+      </section>
+    )
+  }
+
   return (
       <section className="">
         <SideBar />
@@ -49,6 +64,13 @@ export async function getServerSideProps(context) {
     }
   }
 
+  await dbConnect()
+  const userProfile = await Profile.findOne({user: id});
+  if(userProfile === null) {
+    return {
+      props: {profile: null}
+    }
+  }
   
 
 
