@@ -1,0 +1,18 @@
+
+export default function AppInputWithBorder({name, value, onChange, placeholder, type = 'text', required = false, minLength, pattern, title}) {
+  return (
+    <input
+      type={type}
+      id={name}
+      className=" rounded-lg border-transparent flex-1 appearance-none  border border-gray-300 w-fulpx-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base  focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+      placeholder={placeholder}
+      name={name}
+      value={value}
+      onChange={onChange}
+      required={required}
+      minLength={minLength}
+      pattern={pattern}
+      title={title}
+    />
+  )
+}
