@@ -22,7 +22,7 @@ export default function DashboardView({profile}) {
         <SideBar />
         <Lottie className='mx-auto w-1/3' loop animationData={emptyBox} />
         <Link href='/dashboard/edit'>
-          <h2 className='text-lg md:text-xl font-medium text-center'>Hmmm, this is looking real empty. <span className='underline text-blue-500'>Let's create your profile!</span></h2>
+          <h2 className='text-lg md:text-xl font-medium text-center'>Hmmm, this is looking real empty. <span className='underline text-blue-500'>Let{"'"}s create your profile!</span></h2>
         </Link>
       </section>
     )
