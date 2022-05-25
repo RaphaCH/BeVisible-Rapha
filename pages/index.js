@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from 'next/image';
 
 import {AuthContext} from '../contexts/AuthContext';
-import AppInput from "../components/AppInput";
+import AppInputWithIcon from "../components/AppInputWithIcon";
 import Button from "../components/Button";
 import { faAt, faLock } from '@fortawesome/free-solid-svg-icons';
 
@@ -62,10 +62,10 @@ export default function Home() {
             <p className="text-sm font-normal text-gray-600 mb-8">Welcome Back</p>
             <p className="font-bold self-center text-red-500">{alert}</p>
             <div className="mb-1 py-2 px-3">
-              <AppInput icon={faAt} name='email' value={form.email} onChange={handleChange} placeholder='Email Address' />
+              <AppInputWithIcon icon={faAt} name='email' value={form.email} onChange={handleChange} placeholder='Email Address' />
             </div>
             <div className="mb-1 py-2 px-3">
-              <AppInput icon={faLock} name='password' value={form.password} onChange={handleChange} placeholder='*****' />
+              <AppInputWithIcon icon={faLock} name='password' value={form.password} onChange={handleChange} placeholder='*****' />
             </div>
             <Button name='Login' type="submit" />
             <div className="flex justify-between mt-4">
