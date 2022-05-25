@@ -10,7 +10,7 @@ module.exports = {
         secondary: '#5B85AA',
         wheat: '#F5E0B7',
         vegasGold: '#D6BA73',
-        etonBlue: '#8BBF9F',
+        etonBlue: ' ',
         beCode: '#000407',
         beCodeLight: '#000C14',
       },
