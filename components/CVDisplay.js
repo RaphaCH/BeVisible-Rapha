@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from 'next/link';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -14,7 +15,7 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import ProjectCard from "./Display/ProjectCard";
 
-export default function CVDisplay({firstName = 'Raphael', lastName = 'Castagna Haasper', image, position = 'Web Dev', email = 'ribamar@ig.com.br', projects, badges, about = 'About me', history = 'My history', test}) {
+export default function CVDisplay({firstName = 'Raphael', lastName = 'Castagna Haasper', image, position = 'Web Dev', email = 'ribamar@ig.com.br', telephone, projects, badges, about = 'About me', history = 'My history', test}) {
   return (
     <section className="mt-5 ">
       <form className="max-w-2xl mx-auto">
@@ -44,6 +45,7 @@ export default function CVDisplay({firstName = 'Raphael', lastName = 'Castagna H
                     className="py-2 text-gray-700 text-base md:text-lg font-medium"
                   >{position}</p>
                   <h3 className="underline text-base md:text-lg">{email}</h3>
+                  <h3 className="underline text-base md:text-lg">phone: {telephone}</h3>
                 </div>
               </div>
             </div>
@@ -69,7 +71,19 @@ export default function CVDisplay({firstName = 'Raphael', lastName = 'Castagna H
             <h1 className="text-gray-600 font-bold mb-5 mx-auto text-xl md:text-2xl">
               The Pride and Joy - ./Projects
             </h1>
-            <ProjectCard />
+            {projects.map((project, index) => {
+              return (
+                  <div key={project.id}>
+                    <ProjectCard
+                      id={project.id}
+                      title={project.title}
+                      link={project.link}
+                      description={project.description}
+                      photo={project.photo ? project.photo : '/images/vercel.svg'}
+                    />
+                  </div>
+              )
+            })}
           </div>
         </div>
 
