@@ -44,14 +44,14 @@ export default function AppForm({profile, profileExists = true}) {
 
   const postData = async (form) => {
     try {
-      // const response = await fetch('/api/users/profile/new', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json'
-      //   },
-      //   body: JSON.stringify(form)
-      // });
-      const response = await api.post('/api/users/profile/new', form);
+      // const response = await api.post('/api/users/profile/new', form);
+      const response = await fetch('/api/users/profile/new', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(form)
+      });
       if(response.status !== 200) {
         console.log(response.status, response.statusText);
       } else {
