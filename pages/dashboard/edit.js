@@ -66,7 +66,19 @@ export async function getServerSideProps(context) {
   }
 
   await dbConnect()
-  const userProfile = await Profile.findOne({user: id});
+  const userProfile = await Profile.findOne({user: id}).lean()
+  if(userProfile) {
+    userProfile._id = userProfile._id.toString();
+    userProfile.user = userProfile.user.toString();
+    userProfile.badges = userProfile.badges.map(badge => {
+      return {
+        id: badge._id.toString(),
+        name: badge.name,
+        isActive: badge.isActive,
+      }
+    });
+  }
+
   if(userProfile === null) {
     return {
       props: {profile: null}
