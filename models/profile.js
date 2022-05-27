@@ -14,6 +14,7 @@ const profileSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    image: String,
     jobTitle: String,
     email: String,
     telephone: Number,
@@ -25,91 +26,50 @@ const profileSchema = new mongoose.Schema({
     ],
     aboutMe: String,
     pastExperiences: String,
-    badges: [
-        {
-            name: {
-                type: String,
-                default: 'faJsSquare'
+    badges: {
+        type: [{
+            name: String,
+            isActive: Boolean
+        }],
+        default: [
+            {
+                name: "fa-brands fa-js-square",
+                isActive: true,
             },
-            isActive: {
-                type: Boolean,
-                default: false
-            }
-        },
-        {
-            name: {
-                type: String,
-                default: 'faPython'
+            {
+                name: 'fa-brands fa-python',
+                isActive: false,
             },
-            isActive: {
-                type: Boolean,
-                default: false
-            }
-        }, {
-            name: {
-                type: String,
-                default: 'faHtml5'
+            {
+                name: 'fa-brands fa-html5',
+                isActive: false,
             },
-            isActive: {
-                type: Boolean,
-                default: false
-            }
-        }, {
-            name: {
-                type: String,
-                default: 'faCss3'
+            {
+                name: 'fa-brands fa-css3',
+                isActive: false,
             },
-            isActive: {
-                type: Boolean,
-                default: false
-            }
-        }, {
-            name: {
-                type: String,
-                default: 'faNodeJs'
+            {
+                name: 'fa-brands fa-node-js',
+                isActive: false,
             },
-            isActive: {
-                type: Boolean,
-                default: false
-            }
-        }, {
-            name: {
-                type: String,
-                default: 'faReact'
+            {
+                name: 'fa-brands fa-react',
+                isActive: false,
             },
-            isActive: {
-                type: Boolean,
-                default: false
-            }
-        }, {
-            name: {
-                type: String,
-                default: 'faVuejs'
+            {
+                name: 'fa-brands fa-vuejs',
+                isActive: false,
             },
-            isActive: {
-                type: Boolean,
-                default: false
-            }
-        }, {
-            name: {
-                type: String,
-                default: 'faAngular'
+            {
+                name: 'fa-brands fa-angular',
+                isActive: false,
             },
-            isActive: {
-                type: Boolean,
-                default: false
+            {
+                name: 'fa-brands fa-figma',
+                isActive: false,
             }
-        }, {
-            name: {
-                type: String,
-                default: 'faFigma'
-            },
-            isActive: {
-                type: Boolean,
-                default: false
-            }
-        },
-    ]
+        ]
+    }  
 })
 
 export default mongoose.models.Profile || mongoose.model('Profile', profileSchema);

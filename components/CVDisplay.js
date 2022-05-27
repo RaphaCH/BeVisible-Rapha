@@ -14,7 +14,7 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import ProjectCard from "./Display/ProjectCard";
 
-export default function CVDisplay({firstName = 'Raphael', lastName = 'Castagna Haasper', position = 'Web Dev', email = 'ribamar@ig.com.br', projectName = 'test 1', projectDescription = 'Blablabla', about = 'About me', history = 'My history'}) {
+export default function CVDisplay({firstName = 'Raphael', lastName = 'Castagna Haasper', image, position = 'Web Dev', email = 'ribamar@ig.com.br', projects, badges, about = 'About me', history = 'My history', test}) {
   return (
     <section className="mt-5 ">
       <form className="max-w-2xl mx-auto">
@@ -22,13 +22,20 @@ export default function CVDisplay({firstName = 'Raphael', lastName = 'Castagna H
           <div className="flex flex-col">
             <div className=" md:w-full md:mx-0">
               <div className="flex items-center space-x-4 justify-center">
-                <Image
+                {image ? (<Image
                   alt="profil"
-                  src={"https://github.com/kristinegusta.png"}
+                  src={image}
                   width={100}
                   height={100}
                   className="mx-auto object-cover rounded-full"
-                />
+                />) : (<Image
+                  alt="profil"
+                  src={'/images/personIcon.png'}
+                  width={100}
+                  height={100}
+                  className="mx-auto object-cover rounded-full"
+                />)}
+                
                 <div className="flex flex-col">
                   <h2 className="text-lg md:text-xl font-medium">{firstName} {lastName}</h2>
                   <p
@@ -45,42 +52,13 @@ export default function CVDisplay({firstName = 'Raphael', lastName = 'Castagna H
                 Badges
               </h2>
               <div className="my-5 grid sm:gap-5 place-items-center grid-flow-col lg:grid-flow-row grid-cols-4 text-3xl lg:text-4xl">
-                <FontAwesomeIcon
-                  icon={faJsSquare}
-                  className="text-vegasGold mx-2 my-3 animate-pulse"
-                />
-                <FontAwesomeIcon
-                  icon={faPython}
-                  className="text-gray-300 mx-2 my-3"
-                />
-                <FontAwesomeIcon
-                  icon={faHtml5}
-                  className="text-gray-300 mx-2 my-3"
-                />
-                <FontAwesomeIcon
-                  icon={faCss3}
-                  className="text-gray-300 mx-2 my-3"
-                />
-                <FontAwesomeIcon
-                  icon={faNodeJs}
-                  className="text-gray-300 mx-2 my-3"
-                />
-                <FontAwesomeIcon
-                  icon={faReact}
-                  className="text-gray-300 mx-2 my-3"
-                />
-                <FontAwesomeIcon
-                  icon={faVuejs}
-                  className="text-gray-300 mx-2 my-3"
-                />
-                <FontAwesomeIcon
-                  icon={faAngular}
-                  className="text-gray-300 mx-2 my-3"
-                />
-                <FontAwesomeIcon
-                  icon={faFigma}
-                  className="text-gray-300 mx-2 my-3"
-                />
+               {badges.map((badge, index) => {
+                 return (
+                   <div key={badge.id}>
+                     <FontAwesomeIcon  icon={badge.name} className={badge.isActive ? "badge-true" : "badge-false"} />
+                   </div>
+                 )
+               })}
               </div>
             </div>
           </div>
@@ -92,7 +70,6 @@ export default function CVDisplay({firstName = 'Raphael', lastName = 'Castagna H
               The Pride and Joy - ./Projects
             </h1>
             <ProjectCard />
-            <ProjectCard projectName={projectName} projectDescription={projectDescription} />
           </div>
         </div>
 

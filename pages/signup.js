@@ -3,7 +3,7 @@ import {useRouter} from 'next/router';
 import Link from "next/link";
 import Image from 'next/image';
 
-import AppInput from "../components/AppInput";
+import AppInputWithIcon from "../components/AppInputWithIcon";
 import Button from "../components/Button";
 import { faAt, faLock, faLandmark, faHashtag } from '@fortawesome/free-solid-svg-icons';
 import CheckBox from "../components/CheckBox";
@@ -45,9 +45,7 @@ export default function SignUp() {
         const data = await response.json()
         setMessage(data.message);
       }
-      if(response.ok){
-        router.push('/');
-      }
+      router.push('/');
     } catch (error) {
       setMessage(error);
       console.log(error.body);
@@ -90,7 +88,7 @@ export default function SignUp() {
             <h1 className="text-gray-800 font-bold text-2xl mb-1">Welcome!</h1>
             <p className="text-sm font-normal text-gray-600 mb-8">Fill out the form to create an account.</p>
             <p className="font-bold self-center text-red-500">{message}</p>
-            <AppInput 
+            <AppInputWithIcon 
               required 
               icon={faAt} 
               type='email' 
@@ -99,7 +97,7 @@ export default function SignUp() {
               onChange={handleChange} 
               placeholder='Email Address' />
             <p>{form.email}</p>
-            <AppInput 
+            <AppInputWithIcon 
               required 
               // pattern='[0-9]' 
               minLength={6} 
@@ -111,7 +109,7 @@ export default function SignUp() {
               onChange={handleChange} 
               placeholder='Set a password' />
             <p>{form.password}</p>
-            <AppInput 
+            <AppInputWithIcon 
               required 
               // pattern='[0-9]' 
               minLength={6} 

@@ -1,8 +1,7 @@
 
-
-export default function AppInput({name, value, onChange, placeholder, type = 'text', required = false, minLength, pattern, title}) {
+export default function AppTextArea({name, value, onChange, placeholder, type = 'text', required = false, minLength, pattern, title}) {
   return (
-    <input
+    <textarea
       type={type}
       id={name}
       className="app-input"
