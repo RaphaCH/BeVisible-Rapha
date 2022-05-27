@@ -18,6 +18,7 @@ import AppInput from './AppInput';
 import AppTextArea from './AppTextArea';
 import AddProject from './AddProject';
 import { api } from '../services/api';
+import ProjectCard from './Display/ProjectCard';
 
 
 
@@ -33,20 +34,47 @@ export default function AppForm({profile, profileExists = true}) {
     aboutMe: profile.aboutMe,
     pastExperiences: profile.pastExperiences,
   })
+  const [projects, setProjects] = useState([
+    {
+      title: profile.projects.title,
+      link: profile.projects.link,
+      description: profile.projects.description,
+      photo: profile.projects.photo,
+    }
+  ]);
+  const [updateProject, setUpdateProject] = useState(...projects);
   const [badges, setBadges] = useState(profile.badges)
-  const [projects, setProjects] = useState(profile.projects)
-  const [newProject, setNewProject] = useState({
+  const [newProject, setNewProject] = useState([{
     title: "",
     description: "",
     photo: "",
     link: "",
-  })
+  }])
 
   const postData = async (form) => {
     try {
       // const response = await api.post('/api/users/profile/new', form);
       const response = await fetch('/api/users/profile/new', {
         method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(form)
+      });
+      if(response.status !== 200) {
+        console.log(response.status, response.statusText);
+      } else {
+        router.push('/dashboard/view');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const putData = async (form) => {
+    try {
+      const response = await fetch('/api/users/profile/edit', {
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
         },
@@ -70,14 +98,55 @@ export default function AppForm({profile, profileExists = true}) {
     })
   }
 
-  const addProject = () => {
-    alert('add project');
+  const handleProjectChange = (event) => {
+    const target = event.target;
+    setNewProject({
+      ...newProject,
+      [target.name]: target.value,
+    })
+  }
+
+  const handleProjectUpdate = (index, event) => {
+    let data = [...updateProject];
+    data[index][event.target.name] = event.target.value;
+    setUpdateProject(data);
+  }
+
+  const addProject = async (event) => {
+    event.preventDefault();
+    console.log(newProject);
+    try {
+      const response = await fetch('/api/users/project/handler', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newProject)
+      })
+      if(response.status !== 200) {
+        console.log(response.status, response.statusText);
+      } else {
+        router.reload(window.location.pathname);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   const handleSubmit = (event) => {
     event.preventDefault();
     profileExists ? putData(form) : postData(form);
   }
+
+  const mappedProjects = profile.projects.map((project, index) => {
+    return <AddProject 
+      key={index} 
+      title={project.title} 
+      link={project.link} 
+      description={project.description}
+      onChange={event => handleProjectUpdate(index, event)}
+    />
+  })
 
 
   return (
@@ -152,10 +221,16 @@ export default function AppForm({profile, profileExists = true}) {
             <h1 className="text-gray-600 font-bold mb-5 self-center text-2xl">
               Your Pride and Joy - ./Projects
             </h1>
-            {projects.map((project, index) => {
-              <AddProject key={index} project={project} />
-            })}
-            {projects.length < 3 ? (<AddProject />) : (<p>cuzinho</p>)}
+            {mappedProjects}
+            {projects.length < 3 ? (
+              <AddProject
+                isNew
+                title={newProject.title} 
+                link={newProject.link} 
+                description={newProject.description} 
+                onChange={handleProjectChange}
+                onClick={addProject}
+                />) : (<p>cuzinho</p>)}
           </div>
         ) : (<div className="flex flex-col lg:w-1/2"><h1 className="text-gray-600 font-bold mb-5 self-center text-2xl">
         Save your profile to add projects

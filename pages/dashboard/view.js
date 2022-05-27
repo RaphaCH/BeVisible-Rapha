@@ -4,13 +4,12 @@ import Lottie from 'lottie-react';
 import Link from 'next/link';
 
 import emptyBox from '../../public/svg/emptyBox.json';
-import dbConnect from '../../lib/dbConnect'
+
+import dbConnect from '../../lib/dbConnect';
 import Profile from '../../models/profile';
 
 import SideBar from "../../components/SideBar";
-import AppForm from "../../components/AppForm";
 import CVDisplay from "../../components/CVDisplay";
-import { getApiClient } from '../../services/axios';
 
 
 
@@ -75,7 +74,7 @@ export async function getServerSideProps(context) {
   }
 
   await dbConnect()
-  const userProfile = await Profile.findOne({user: id}).lean();
+  const userProfile = await Profile.findOne({user: id}).populate('projects').lean()
   if(userProfile) {
     userProfile._id = userProfile._id.toString();
     userProfile.user = userProfile.user.toString();
@@ -86,6 +85,17 @@ export async function getServerSideProps(context) {
         isActive: badge.isActive,
       }
     });
+    if(userProfile.projects.length > 0) {
+      userProfile.projects = userProfile.projects.map(project => {
+        return {
+          id: project._id.toString(),
+          title: project.title,
+          description: project.description,
+          photo: project.photo ? project.photo : '',
+          link: project.link,
+        }
+      });
+    }
   }
   if(userProfile === null) {
     return {
