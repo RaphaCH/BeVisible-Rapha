@@ -45,9 +45,7 @@ export default function SignUp() {
         const data = await response.json()
         setMessage(data.message);
       }
-      if(response.ok){
-        router.push('/');
-      }
+      router.push('/');
     } catch (error) {
       setMessage(error);
       console.log(error.body);

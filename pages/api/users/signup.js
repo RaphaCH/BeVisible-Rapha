@@ -31,7 +31,7 @@ export default async function Handler(req, res) {
                 }
                 const exists = await User.findOne({email: email});
                 if(exists) {
-                    return res.status(409).send({message: `${email} is already registered`})
+                    return res.status(409).json({message: `${email} is already registered`})
                 }
                 if(!exists) {
                     const newUser = new User({
@@ -45,11 +45,11 @@ export default async function Handler(req, res) {
                         newUser.password = hash;
                         newUser.save()
                     })
-                    return res.status(201)
+                    return res.status(201).json({message: 'User created successfully'})
                 }
             } catch (error) {
                 console.log(error);
-                return res.status(500)
+                return res.status(500).json({message: 'Something went wrong'})
             }
             
             break;
