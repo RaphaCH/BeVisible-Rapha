@@ -17,6 +17,10 @@ export default async function Handler(req, res) {
   switch (method) {
     case 'POST':
       try {
+        const exists = await Profile.findOne({user: id});
+        if(exists) {
+          return res.status(409).json({message: `Profile already exists`})
+        }
         const profile = new Profile({
           user: id,
           firstName: firstName,
