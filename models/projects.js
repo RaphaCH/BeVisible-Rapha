@@ -1,8 +1,9 @@
 import mongoose from 'mongoose';
+const Schema = mongoose.Schema;
 
 
 
-const projectSchema = new mongoose.Schema({
+const projectSchema = new Schema({
     title: String,
     description: String,
     photo: String,

@@ -3,10 +3,11 @@ import jwt from 'jsonwebtoken';
 import Lottie from 'lottie-react';
 import Link from 'next/link';
 
-import emptyBox from '../../public/svg/emptyBox.json';
-
 import dbConnect from '../../lib/dbConnect';
 import Profile from '../../models/profile';
+
+import emptyBox from '../../public/svg/emptyBox.json';
+
 
 import SideBar from "../../components/SideBar";
 import CVDisplay from "../../components/CVDisplay";
@@ -74,7 +75,7 @@ export async function getServerSideProps(context) {
   }
 
   await dbConnect()
-  const userProfile = await Profile.findOne({user: id}).populate('projects').lean()
+  const userProfile = await Profile.findOne({user: id}).populate({path: 'projects', model: 'Project'}).lean()
   if(userProfile) {
     userProfile._id = userProfile._id.toString();
     userProfile.user = userProfile.user.toString();
