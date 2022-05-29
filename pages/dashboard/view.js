@@ -42,7 +42,6 @@ export default function DashboardView({profile}) {
         badges={profile.badges}
         key={profile._id} 
         />
-        {/* <CVDisplay /> */}
       </section>
   )
 }
