@@ -3,22 +3,11 @@ import Image from "next/image";
 import {useRouter} from 'next/router';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faJsSquare,
-  faHtml5,
-  faCss3,
-  faNodeJs,
-  faReact,
-  faPython,
-  faVuejs,
-  faAngular,
-  faFigma,
-} from "@fortawesome/free-brands-svg-icons";
+
 import AppInput from './AppInput';
 import AppTextArea from './AppTextArea';
 import AddProject from './AddProject';
-import { api } from '../services/api';
-import ProjectCard from './Display/ProjectCard';
+import UpdateProject from './UpdateProject';
 
 
 
@@ -34,17 +23,14 @@ export default function AppForm({profile, profileExists = true}) {
     aboutMe: profile.aboutMe,
     pastExperiences: profile.pastExperiences,
   })
-  const [projects, setProjects] = useState([
-    {
-      title: profile.projects.title,
-      link: profile.projects.link,
-      description: profile.projects.description,
-      photo: profile.projects.photo,
-    }
-  ]);
-  const [updateProject, setUpdateProject] = useState(...projects);
-  const [badges, setBadges] = useState(profile.badges)
+  const [projects, setProjects] = useState(profile.projects);
   const [newProject, setNewProject] = useState([{
+    title: "",
+    description: "",
+    photo: "",
+    link: "",
+  }])
+  const [updateProject, setUpdateProject] = useState([{
     title: "",
     description: "",
     photo: "",
@@ -53,7 +39,6 @@ export default function AppForm({profile, profileExists = true}) {
 
   const postData = async (form) => {
     try {
-      // const response = await api.post('/api/users/profile/new', form);
       const response = await fetch('/api/users/profile/new', {
         method: 'POST',
         headers: {
@@ -98,7 +83,19 @@ export default function AppForm({profile, profileExists = true}) {
     })
   }
 
-  const handleProjectChange = (event) => {
+  useEffect(() => {
+    profile.projects.forEach(project => {
+      let newField = {
+        title: "",
+        description: "",
+        photo: "",
+        link: "",
+      }
+      setUpdateProject([...updateProject, newField]);
+    });
+  }, [profile])
+
+  const handleAddProject = (event) => {
     const target = event.target;
     setNewProject({
       ...newProject,
@@ -106,13 +103,14 @@ export default function AppForm({profile, profileExists = true}) {
     })
   }
 
-  const handleProjectUpdate = (index, event) => {
-    let data = [...updateProject];
+  const handleUpdateProject = (index, event) => {
+    let data = [...projects];
     data[index][event.target.name] = event.target.value;
-    setUpdateProject(data);
+    // setUpdateProject(data);
+    setProjects(data);
   }
 
-  const addProject = async (event) => {
+  const postProject = async (event) => {
     event.preventDefault();
     console.log(newProject);
     try {
@@ -133,18 +131,43 @@ export default function AppForm({profile, profileExists = true}) {
     }
   }
 
+  const putProject = async (event, projectId, indexId) => {
+    event.preventDefault();
+    let projectToUpdate = projects[indexId];
+    console.log(projects);
+    try {
+      const response = await fetch('/api/users/project/handler', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(projectToUpdate, projectId)
+      })
+      if(response.status !== 200) {
+        console.log(response.status, response.statusText);
+      } else {
+        router.reload(window.location.pathname);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   const handleSubmit = (event) => {
     event.preventDefault();
     profileExists ? putData(form) : postData(form);
   }
 
-  const mappedProjects = profile.projects.map((project, index) => {
+  const mappedProjects = projects.map((project, index) => {
     return <AddProject 
       key={index} 
       title={project.title} 
       link={project.link} 
       description={project.description}
-      onChange={event => handleProjectUpdate(index, event)}
+      projectId={project.id}
+      indexId={index}
+      onChange={event => handleUpdateProject(index, event)}
+      onClick={putProject}
     />
   })
 
@@ -204,7 +227,7 @@ export default function AppForm({profile, profileExists = true}) {
                 Badges
               </h2>
               <div className="my-5 grid gap-4 place-items-center grid-flow-row grid-cols-4 text-3xl lg:text-6xl">
-                {badges.map((badge, index) => {
+                {profile.badges.map((badge, index) => {
                   return (
                       <FontAwesomeIcon key={index} icon={badge.name} className={badge.isActive ? "badge-true" : "badge-false"} />
                   )
@@ -222,15 +245,15 @@ export default function AppForm({profile, profileExists = true}) {
               Your Pride and Joy - ./Projects
             </h1>
             {mappedProjects}
-            {projects.length < 3 ? (
+            {profile.projects.length < 3 ? (
               <AddProject
                 isNew
                 title={newProject.title} 
                 link={newProject.link} 
                 description={newProject.description} 
-                onChange={handleProjectChange}
-                onClick={addProject}
-                />) : (<p>cuzinho</p>)}
+                onChange={handleAddProject}
+                onClick={postProject}
+                />) : (<p className='hidden'>pato</p>)}
           </div>
         ) : (<div className="flex flex-col lg:w-1/2"><h1 className="text-gray-600 font-bold mb-5 self-center text-2xl">
         Save your profile to add projects
