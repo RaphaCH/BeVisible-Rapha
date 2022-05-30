@@ -5,19 +5,56 @@ import { parseCookies } from 'nookies';
 
 import Card from "../../components/Card";
 import SearchBarWithFilter from "../../components/NavBars/SearchBarWithFilter";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 
 export default function Gallery({ learnerProfiles }) {
     //all learners satisfying filter
     const [filteredList, setFilteredList] = useState(learnerProfiles);
     //filter by badge
-    const [selectedBadges, setSelectedBadges] = useState('');
+    const [selectedBadge, setSelectedBadge] = useState('');
     //filter by name
-    const [selectedNames, setSelectedNames] = useState('');
+    const [selectedName, setSelectedName] = useState('');
+
+    const filterByBadge = (filteredData) => {
+        const metCriteria = []
+        //avoid filtering for empty values
+        if(!selectedBadge) {
+            return filteredData
+        }
+        const toBeFiltered = filteredData.forEach(learner => {
+            const knowsThat = learner.badges.filter(badge => badge.name === selectedBadge && badge.isActive === true);
+            if(knowsThat.length >0) {
+                metCriteria.push(learner)
+            }
+        })
+        return metCriteria;
+    }
+
+    const filterByName = (filteredData) => {
+        if(!selectedName) {
+            return filteredData
+        }
+        const nameToFilter = filteredList.filter(learner => learner.firstName.toLowerCase().includes("meida".toLowerCase()) || learner.lastName.toLowerCase().includes("meida".toLowerCase()));
+        return nameToFilter
+    }
+
+    const handleBadgeChange = event => {
+        setSelectedBadge(event.target.value);
+    }
+
+    const handleNameChange = event => {
+        setSelectedName(event.target.value);
+    }
+
+    useEffect(() => {
+        var filteredData = filterByBadge(learnerProfiles);
+        filteredData = filterByName(filteredData);
+        setFilteredList(filteredData);
+    }, [selectedBadge, selectedName]);
 
 
-    const mappedLearners = learnerProfiles.map(learner => {
+    const mappedLearners = filteredList.map(learner => {
         return <div className="mx-5" key={learner._id}>
             <Card 
             firstName={learner.firstName}
@@ -33,7 +70,7 @@ export default function Gallery({ learnerProfiles }) {
 
     return (
         <>
-            <SearchBarWithFilter />
+            <SearchBarWithFilter onSelectChange={handleBadgeChange} onInputChange={handleNameChange} inputValue={selectedName} />
             <section className="flex flex-row justify-center flex-wrap">
                 {mappedLearners}
             </section>
