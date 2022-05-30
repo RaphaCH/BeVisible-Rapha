@@ -13,6 +13,7 @@ import {
   faAngular,
   faFigma,
 } from "@fortawesome/free-brands-svg-icons";
+import { faCode } from '@fortawesome/free-solid-svg-icons';
 import ProjectCard from "./Display/ProjectCard";
 
 export default function CVDisplay({firstName = 'Raphael', lastName = 'Castagna Haasper', image, position = 'Web Dev', email = 'ribamar@ig.com.br', telephone, projects, badges, about = 'About me', history = 'My history', test}) {
@@ -44,6 +45,10 @@ export default function CVDisplay({firstName = 'Raphael', lastName = 'Castagna H
                     id="user-info-email"
                     className="py-2 text-gray-700 text-base md:text-lg font-medium"
                   >{position}</p>
+                  <div className="flex flex-row items-center h-fit">
+                  <FontAwesomeIcon icon={faCode} className='text-base text-black mr-2' />
+                  <p className="py-2 text-gray-700 text-base md:text-lg font-medium">Class</p>
+                  </div>
                   <h3 className="underline text-base md:text-lg">{email}</h3>
                   <h3 className="underline text-base md:text-lg">phone: {telephone}</h3>
                 </div>

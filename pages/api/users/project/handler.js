@@ -35,7 +35,26 @@ export default async function Handler(req,res) {
       }
       
       break;
-  
+    case 'PUT':
+      try {
+        const userProfile = await Profile.findOne({user: id});
+        if(!userProfile) {
+          return res.status(404).json({message: 'User profile not found'});
+        } else {
+          const project = await Project.findById(req.body.id);
+          if(!project) {
+            return res.status(404).json({message: 'Project not found'});
+          } else {
+            project.title = req.body.title;
+            project.description = req.body.description;
+            project.link = req.body.link;
+            project.save();
+            return res.status(200).json({project});
+          }
+        }
+      } catch (error) {
+        return res.status(500).json({message: 'Something went wrong'})
+      }
     default:
       res.status(400).json({success: false})
       break;

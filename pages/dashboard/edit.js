@@ -35,7 +35,7 @@ export default function DashboardEdit({profile}) {
   return (
     <section className="">
       <SideBar />
-      <AppForm profile={profile} projects={profile.projects}/>
+      <AppForm profile={profile} />
     </section>
 )
 
