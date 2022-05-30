@@ -69,12 +69,12 @@ export default function Gallery({ learnerProfiles }) {
     })
 
     return (
-        <>
+        <div className="bg-beCodeLight">
             <SearchBarWithFilter onSelectChange={handleBadgeChange} onInputChange={handleNameChange} inputValue={selectedName} />
             <section className="flex flex-row justify-center flex-wrap">
                 {mappedLearners}
             </section>
-        </>
+        </div>
     )
 }
 
