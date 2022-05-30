@@ -1,6 +1,7 @@
 import dbConnect from "../../lib/dbConnect";
 import Profile from '../../models/profile';
 import Project from '../../models/projects';
+import {useRouter} from 'next/router';
 import { parseCookies } from 'nookies';
 
 import Card from "../../components/Card";
@@ -9,6 +10,7 @@ import { useEffect, useState } from "react";
 
 
 export default function Gallery({ learnerProfiles }) {
+    const router = useRouter();
     //all learners satisfying filter
     const [filteredList, setFilteredList] = useState(learnerProfiles);
     //filter by badge
@@ -35,7 +37,7 @@ export default function Gallery({ learnerProfiles }) {
         if(!selectedName) {
             return filteredData
         }
-        const nameToFilter = filteredList.filter(learner => learner.firstName.toLowerCase().includes("meida".toLowerCase()) || learner.lastName.toLowerCase().includes("meida".toLowerCase()));
+        const nameToFilter = filteredList.filter(learner => learner.firstName.toLowerCase().includes(selectedName.toLowerCase()) || learner.lastName.toLowerCase().includes(selectedName.toLowerCase()));
         return nameToFilter
     }
 
@@ -53,9 +55,14 @@ export default function Gallery({ learnerProfiles }) {
         setFilteredList(filteredData);
     }, [selectedBadge, selectedName]);
 
+    const handleNavigation = (e, learnerId) => {
+        e.preventDefault();
+        router.push({pathname: `/profiles/${learnerId}`, query: {learnerId: learnerId}});
+    }
+
 
     const mappedLearners = filteredList.map(learner => {
-        return <div className="mx-5" key={learner._id}>
+        return <div className="mx-5 hover:cursor-pointer" key={learner._id} onClick={e => handleNavigation(e, learner._id)}>
             <Card 
             firstName={learner.firstName}
             lastName={learner.lastName}
