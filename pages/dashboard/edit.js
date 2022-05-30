@@ -17,6 +17,7 @@ export default function DashboardEdit({profile}) {
     jobTitle: '',
     email: '',
     telephone: '',
+    city: '',
     projects: [],
     aboutMe: '',
     pastExperiences: '',

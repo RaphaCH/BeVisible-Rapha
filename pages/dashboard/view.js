@@ -36,6 +36,7 @@ export default function DashboardView({profile}) {
         position={profile.jobTitle}
         email={profile.email}
         telephone={profile.telephone}
+        city={profile.city}
         projects={profile.projects}
         about={profile.aboutMe} 
         history={profile.pastExperiences}

@@ -20,6 +20,7 @@ export default function AppForm({profile, profileExists = true}) {
     jobTitle: profile.jobTitle,
     email: profile.email,
     telephone: profile.telephone,
+    city: profile.city,
     aboutMe: profile.aboutMe,
     pastExperiences: profile.pastExperiences,
   })
@@ -221,6 +222,12 @@ export default function AppForm({profile, profileExists = true}) {
                 <h2 className="w-1/3">Telephone</h2>
                 <div className="w-2/3">
                     <AppInput name='telephone' value={form.telephone} onChange={handleChange} placeholder='Telephone' />
+                </div>
+              </div>
+              <div className="flex flex-row p-2 my-5 w-full items-center justify-evenly">
+                <h2 className="w-1/3">City</h2>
+                <div className="w-2/3">
+                    <AppInput name='city' value={form.city} onChange={handleChange} placeholder='City' />
                 </div>
               </div>
               <h2 className="font-bold text-2xl p-2 my-5 flex flex-col flex-1 justify-center items-center">

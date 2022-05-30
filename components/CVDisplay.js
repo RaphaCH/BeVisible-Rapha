@@ -2,21 +2,10 @@ import Image from "next/image";
 import Link from 'next/link';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faJsSquare,
-  faHtml5,
-  faCss3,
-  faNodeJs,
-  faReact,
-  faPython,
-  faVuejs,
-  faAngular,
-  faFigma,
-} from "@fortawesome/free-brands-svg-icons";
 import { faCode } from '@fortawesome/free-solid-svg-icons';
 import ProjectCard from "./Display/ProjectCard";
 
-export default function CVDisplay({firstName = 'Raphael', lastName = 'Castagna Haasper', image, position = 'Web Dev', email = 'ribamar@ig.com.br', telephone, projects, badges, about = 'About me', history = 'My history', test}) {
+export default function CVDisplay({firstName = 'Raphael', lastName = 'Castagna Haasper', image, position = 'Web Dev', email = 'ribamar@ig.com.br', telephone, city, projects, badges, about = 'About me', history = 'My history', test}) {
   return (
     <section className="mt-5 ">
       <form className="max-w-2xl mx-auto">
@@ -51,6 +40,7 @@ export default function CVDisplay({firstName = 'Raphael', lastName = 'Castagna H
                   </div>
                   <h3 className="underline text-base md:text-lg">{email}</h3>
                   <h3 className="underline text-base md:text-lg">phone: {telephone}</h3>
+                  <h3 className="underline text-base md:text-lg">{city}</h3>
                 </div>
               </div>
             </div>
