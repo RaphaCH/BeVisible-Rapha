@@ -8,7 +8,7 @@ export default function Card({ email = 'test@test.com', firstName = 'Raphael', l
     const activeBadges = badges.filter(badge => badge.isActive === true);
 
     const mappedBadges = activeBadges.map(activeBadge => {
-        return <FontAwesomeIcon icon={activeBadge.name} className='text-base badge-true mx-1 my-0 mt-4 ' />
+        return <FontAwesomeIcon key={activeBadge.id} icon={activeBadge.name} className='text-base badge-true mx-1 my-0 mt-4 ' />
     })
 
     return (
