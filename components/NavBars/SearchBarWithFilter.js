@@ -4,6 +4,7 @@ import { FaBeer, FaFirefox, FaEye, FaPen, FaFilter } from "react-icons/fa";
 import AppInput from "../AppInput";
 
 export default function SearchBarWithFilter({
+  greeting,
   selectedBadge,
   onSelectChange,
   onInputChange,
@@ -11,7 +12,7 @@ export default function SearchBarWithFilter({
 }) {
   return (
     <div className="h-20 flex flex-row justify-end items-center bg-white text-white shadow-2xl">
-      <div className="w-1/2">
+      <div className="w-1/2 flex flex-row justify-start items-center">
         <div className="w-20 self-start">
           <Image
             width={470}
@@ -21,9 +22,10 @@ export default function SearchBarWithFilter({
             layout="responsive"
           />
         </div>
+          <p className="text-base text-beCode">Welcome, {greeting}</p>
       </div>
 
-      <div className="flex p-5">
+      <div className="w-1/2 flex p-5">
         <AppInput
           icon="FaFilter"
           placeholder="Search for a student"
