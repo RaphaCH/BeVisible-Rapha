@@ -3,13 +3,14 @@ import Profile from '../../models/profile';
 import Project from '../../models/projects';
 import {useRouter} from 'next/router';
 import { parseCookies } from 'nookies';
+import jwt from 'jsonwebtoken';
 
 import Card from "../../components/Card";
 import SearchBarWithFilter from "../../components/NavBars/SearchBarWithFilter";
 import { useEffect, useState } from "react";
 
 
-export default function Gallery({ learnerProfiles }) {
+export default function Gallery({ learnerProfiles, email }) {
     const router = useRouter();
     //all learners satisfying filter
     const [filteredList, setFilteredList] = useState(learnerProfiles);
@@ -75,9 +76,10 @@ export default function Gallery({ learnerProfiles }) {
         </div>
     })
 
+    
     return (
         <div className="bg-beCodeLight">
-            <SearchBarWithFilter onSelectChange={handleBadgeChange} onInputChange={handleNameChange} inputValue={selectedName} />
+            <SearchBarWithFilter greeting={email} onSelectChange={handleBadgeChange} onInputChange={handleNameChange} inputValue={selectedName} />
             <section className="flex flex-row justify-center flex-wrap">
                 {mappedLearners}
             </section>
@@ -89,6 +91,17 @@ export async function getServerSideProps(context) {
     let { visibleBackend: token } = parseCookies(context);
 
     if(!token) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      }
+    }
+  }
+
+  const {email, permissions} = jwt.verify(token, process.env.KEY);
+  
+  if(permissions === 'learner') {
     return {
       redirect: {
         destination: '/',
@@ -123,7 +136,7 @@ export async function getServerSideProps(context) {
     }
 
     return {
-        props: { learnerProfiles }
+        props: { learnerProfiles, email }
     }
 
 }
