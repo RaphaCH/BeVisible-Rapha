@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['github.com']
+    domains: ['github.com', 'res.cloudinary.com']
   },
   env: {
     MONGO: process.env.MONGO,

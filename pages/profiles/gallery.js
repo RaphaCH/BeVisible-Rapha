@@ -72,6 +72,7 @@ export default function Gallery({ learnerProfiles, email }) {
             phone={learner.telephone}
             email={learner.email}
             badges={learner.badges}
+            image={learner.image}
             />
         </div>
     })
