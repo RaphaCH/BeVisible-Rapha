@@ -17,6 +17,7 @@ export default function DashboardEdit({profile}) {
     jobTitle: '',
     email: '',
     telephone: '',
+    city: '',
     projects: [],
     aboutMe: '',
     pastExperiences: '',
@@ -35,7 +36,7 @@ export default function DashboardEdit({profile}) {
   return (
     <section className="">
       <SideBar />
-      <AppForm profile={profile}/>
+      <AppForm profile={profile} />
     </section>
 )
 
@@ -66,7 +67,7 @@ export async function getServerSideProps(context) {
   }
 
   await dbConnect()
-  const userProfile = await Profile.findOne({user: id}).lean()
+  const userProfile = await Profile.findOne({user: id}).populate('projects').lean()
   if(userProfile) {
     userProfile._id = userProfile._id.toString();
     userProfile.user = userProfile.user.toString();
@@ -75,6 +76,15 @@ export async function getServerSideProps(context) {
         id: badge._id.toString(),
         name: badge.name,
         isActive: badge.isActive,
+      }
+    });
+    userProfile.projects = userProfile.projects.map(project => {
+      return {
+        id: project._id.toString(),
+        title: project.title,
+        description: project.description,
+        photo: project.photo ? project.photo : '',
+        link: project.link,
       }
     });
   }
@@ -86,7 +96,7 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: {userProfile}
+    props: {profile: userProfile}
   }
 
 }

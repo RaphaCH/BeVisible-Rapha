@@ -18,6 +18,7 @@ const profileSchema = new mongoose.Schema({
     jobTitle: String,
     email: String,
     telephone: Number,
+    city: String,
     projects: [
         {
             type: mongoose.Schema.Types.ObjectId,

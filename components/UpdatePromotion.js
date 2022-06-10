@@ -1,40 +1,43 @@
 
 
-export default function AddProject({description, link, title, onChange, onClick, isNew = false, projectId, indexId}) {
+
+
+
+export default function UpdatePromotion({before, after, onChange, onClick}) {
   return (
     <>
       <div className="my-5">
-      <p>{title}</p>
+      <p>{before.title}</p>
         <input
           type="text"
           name='title'
-          value={title}
-          onChange={e => onChange(e)}
+          value={after.title}
+          onChange={onChange}
           className="app-input"
           placeholder="Project name"
         />
         <div className="h-5"></div>
-        <p>{link}</p>
+        <p>{before.link}</p>
         <input
           type="text"
           name='link'
-          value={link}
+          value={after.link}
           onChange={onChange}
           className="app-input"
           placeholder="link"
         />
         <div className="h-5"></div>
-        <p>{description}</p>
+        <p>{before.description}</p>
         <textarea
           type="text"
           name='description'
-          value={description}
+          value={after.description}
           onChange={onChange}
           className="app-input"
           placeholder="White a short description of this project!"
         ></textarea>
       </div>
-      <button onClick={projectId ? e =>onClick(e, projectId, indexId) : e =>onClick(e)}>{isNew ? 'Add Project' : 'Update Project'}</button>
+      <button onClick={onClick}>Update Project</button>
       <div className="border-[1.5px] border-solid  border-gray-300 m-10 " />
     </>
   );

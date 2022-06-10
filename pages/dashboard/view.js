@@ -4,13 +4,13 @@ import Lottie from 'lottie-react';
 import Link from 'next/link';
 
 import emptyBox from '../../public/svg/emptyBox.json';
-import dbConnect from '../../lib/dbConnect'
+
+import dbConnect from '../../lib/dbConnect';
 import Profile from '../../models/profile';
+import Project from '../../models/projects';
 
 import SideBar from "../../components/SideBar";
-import AppForm from "../../components/AppForm";
 import CVDisplay from "../../components/CVDisplay";
-import { getApiClient } from '../../services/axios';
 
 
 
@@ -20,7 +20,7 @@ export default function DashboardView({profile}) {
       <section className="">
         <Lottie className='mx-auto lg:w-1/3' loop animationData={emptyBox} />
         <Link href='/dashboard/edit'>
-          <h2 className='mt-5 text-lg md:text-xl xl:text-2xl font-medium text-center'>Hmmm, this is looking real empty. <span className='underline text-blue-500'>Let{"'"}s create your profile!</span></h2>
+          <h2 className='mt-5 text-lg md:text-xl xl:text-2xl font-medium text-center'>Hmmm, this is looking real empty. <span className='underline text-blue-500 hover:cursor-pointer'>Let{"'"}s create your profile!</span></h2>
         </Link>
       </section>
     )
@@ -36,13 +36,13 @@ export default function DashboardView({profile}) {
         position={profile.jobTitle}
         email={profile.email}
         telephone={profile.telephone}
+        city={profile.city}
         projects={profile.projects}
         about={profile.aboutMe} 
         history={profile.pastExperiences}
         badges={profile.badges}
         key={profile._id} 
         />
-        {/* <CVDisplay /> */}
       </section>
   )
 }
@@ -75,7 +75,7 @@ export async function getServerSideProps(context) {
   }
 
   await dbConnect()
-  const userProfile = await Profile.findOne({user: id}).lean();
+  const userProfile = await Profile.findOne({user: id}).populate({path: 'projects', model: Project}).lean();
   if(userProfile) {
     userProfile._id = userProfile._id.toString();
     userProfile.user = userProfile.user.toString();
@@ -86,6 +86,17 @@ export async function getServerSideProps(context) {
         isActive: badge.isActive,
       }
     });
+    if(userProfile.projects.length > 0) {
+      userProfile.projects = userProfile.projects.map(project => {
+        return {
+          id: project._id.toString(),
+          title: project.title,
+          description: project.description,
+          photo: project.photo ? project.photo : '',
+          link: project.link,
+        }
+      });
+    }
   }
   if(userProfile === null) {
     return {

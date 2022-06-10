@@ -1,20 +1,11 @@
 import Image from "next/image";
+import Link from 'next/link';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faJsSquare,
-  faHtml5,
-  faCss3,
-  faNodeJs,
-  faReact,
-  faPython,
-  faVuejs,
-  faAngular,
-  faFigma,
-} from "@fortawesome/free-brands-svg-icons";
+import { faCode } from '@fortawesome/free-solid-svg-icons';
 import ProjectCard from "./Display/ProjectCard";
 
-export default function CVDisplay({firstName = 'Raphael', lastName = 'Castagna Haasper', image, position = 'Web Dev', email = 'ribamar@ig.com.br', projects, badges, about = 'About me', history = 'My history', test}) {
+export default function CVDisplay({firstName = 'Raphael', lastName = 'Castagna Haasper', image, position = 'Web Dev', email = 'ribamar@ig.com.br', telephone, city, projects, badges, about = 'About me', history = 'My history', test}) {
   return (
     <section className="mt-5 ">
       <form className="max-w-2xl mx-auto">
@@ -27,7 +18,7 @@ export default function CVDisplay({firstName = 'Raphael', lastName = 'Castagna H
                   src={image}
                   width={100}
                   height={100}
-                  className="mx-auto object-cover rounded-full"
+                  className="mx-auto object-cover rounded-full object-center"
                 />) : (<Image
                   alt="profil"
                   src={'/images/personIcon.png'}
@@ -43,7 +34,13 @@ export default function CVDisplay({firstName = 'Raphael', lastName = 'Castagna H
                     id="user-info-email"
                     className="py-2 text-gray-700 text-base md:text-lg font-medium"
                   >{position}</p>
+                  <div className="flex flex-row items-center h-fit">
+                  <FontAwesomeIcon icon={faCode} className='text-base text-black mr-2' />
+                  <p className="py-2 text-gray-700 text-base md:text-lg font-medium">Class</p>
+                  </div>
                   <h3 className="underline text-base md:text-lg">{email}</h3>
+                  <h3 className="underline text-base md:text-lg">phone: {telephone}</h3>
+                  <h3 className="underline text-base md:text-lg">{city}</h3>
                 </div>
               </div>
             </div>
@@ -69,7 +66,19 @@ export default function CVDisplay({firstName = 'Raphael', lastName = 'Castagna H
             <h1 className="text-gray-600 font-bold mb-5 mx-auto text-xl md:text-2xl">
               The Pride and Joy - ./Projects
             </h1>
-            <ProjectCard />
+            {projects.map((project, index) => {
+              return (
+                  <div key={project.id}>
+                    <ProjectCard
+                      id={project.id}
+                      title={project.title}
+                      link={project.link}
+                      description={project.description}
+                      photo={project.photo ? project.photo : '/images/vercel.svg'}
+                    />
+                  </div>
+              )
+            })}
           </div>
         </div>
 

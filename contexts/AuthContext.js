@@ -42,7 +42,15 @@ export function AuthProvider({children}) {
             //     maxAge: 60 * 60 * 1 //1 hour
             // })
             setUser(user);
-            Router.push('/dashboard/view');
+            const {permissions} = user;
+            console.log(permissions);
+            if(permissions === 'learner') {
+                Router.push('/dashboard/view');
+            }
+            if(permissions !== 'learner') {
+                Router.push('/profiles/gallery');
+            }
+            
         }
         return {message}
         // //Retrieve permissions from user (Student, Coach, Company).
