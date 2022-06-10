@@ -32,6 +32,10 @@ export default function RegisterCompany() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log(form, coach, company);
+    if(coach === false && company === false){
+      setMessage('You must select at least one role: Coach or Company');
+      return;
+    }
     try {
       const response = await fetch('/api/coaches/managePersonnel', {
         method: 'POST',
@@ -44,7 +48,9 @@ export default function RegisterCompany() {
         const data = await response.json()
         setMessage(data.message);
       }
-      // router.push('/');
+      else {
+      router.push('/profiles/gallery');
+      }
     } catch (error) {
       setMessage(error);
       console.log(error.body);
@@ -84,8 +90,8 @@ export default function RegisterCompany() {
       <div className="flex w-full lg:w-1/2 justify-center items-center bg-white space-y-8">
         <div className="w-full px-8 md:px-32 lg:px-24">
           <form onSubmit={handleSubmit}  className="bg-white rounded-md shadow-2xl p-5">
-            <h1 className="text-gray-800 font-bold text-2xl mb-1">Welcome!</h1>
-            <p className="text-sm font-normal text-gray-600 mb-8">Fill out the form to create an account.</p>
+            <h1 className="text-gray-800 font-bold text-2xl mb-1">Welcome Coach!</h1>
+            <p className="text-sm font-normal text-gray-600 mb-8">Here you can add new coaches or companies.</p>
             <p className="font-bold self-center text-red-500">{message}</p>
             <AppInputWithIcon 
               required 
