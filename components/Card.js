@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCode, faPhone, faLocationDot, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 
-export default function Card({ email = 'test@test.com', firstName = 'Raphael', lastName = 'Castagna Haasper', position = 'Web Dev', aboutMe = 'About', phone = '2345678', city = 'city', badges }) {
+export default function Card({ email = 'test@test.com', firstName = 'Raphael', lastName = 'Castagna Haasper', position = 'Web Dev', aboutMe = 'About', phone = '2345678', city = 'city', badges, image = "/images/personIcon.png" }) {
 
     const activeBadges = badges.filter(badge => badge.isActive === true);
 
@@ -18,7 +18,7 @@ export default function Card({ email = 'test@test.com', firstName = 'Raphael', l
                     layout='fill'
                     objectFit='cover'
                     className=""
-                    src={"https://github.com/RaphaCH.png"}
+                    src={image}
                     alt="avatar" />
             </div>
             <div className="flex items-center px-6 py-3 bg-beCode">

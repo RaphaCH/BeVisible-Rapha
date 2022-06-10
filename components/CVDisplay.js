@@ -18,7 +18,7 @@ export default function CVDisplay({firstName = 'Raphael', lastName = 'Castagna H
                   src={image}
                   width={100}
                   height={100}
-                  className="mx-auto object-cover rounded-full"
+                  className="mx-auto object-cover rounded-full object-center"
                 />) : (<Image
                   alt="profil"
                   src={'/images/personIcon.png'}
