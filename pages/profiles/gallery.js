@@ -6,11 +6,12 @@ import { parseCookies } from 'nookies';
 import jwt from 'jsonwebtoken';
 
 import Card from "../../components/Card";
+import Button from '../../components/Button';
 import SearchBarWithFilter from "../../components/NavBars/SearchBarWithFilter";
 import { useEffect, useState } from "react";
 
 
-export default function Gallery({ learnerProfiles, email }) {
+export default function Gallery({ learnerProfiles, email, permissions }) {
     const router = useRouter();
     //all learners satisfying filter
     const [filteredList, setFilteredList] = useState(learnerProfiles);
@@ -82,6 +83,9 @@ export default function Gallery({ learnerProfiles, email }) {
         <div className="bg-beCodeLight">
             <SearchBarWithFilter greeting={email} onSelectChange={handleBadgeChange} onInputChange={handleNameChange} inputValue={selectedName} />
             <section className="flex flex-row justify-center flex-wrap">
+                {permissions === "coach" ? (<div className="bg-white w-full flex p-2 justify-center md:justify-start h-fit">
+                    <Button name='Register Company' onClick={() => router.push('/registerCompany')} style='w-1/2 md:w-60'/>
+                </div>) : (<div className="hidden"></div>)}
                 {mappedLearners}
             </section>
         </div>
@@ -137,7 +141,7 @@ export async function getServerSideProps(context) {
     }
 
     return {
-        props: { learnerProfiles, email }
+        props: { learnerProfiles, email, permissions }
     }
 
 }
